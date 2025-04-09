@@ -10,11 +10,11 @@ const { checkForAuthenticationCookie } = require("./middlewares/authentication")
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 app.use(cookieParser())
-app.use(checkForAuthenticationCookie('token'))
+app.use(checkForAuthenticationCookie("token"))
 app.use(express.urlencoded({extended: false}))
 // app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/blogify').then(e=>{console.log("Mongodb connected")})
+mongoose.connect('mongodb://localhost:27017/blogify').then((e)=>{console.log("Mongodb connected")})
 
 app.get("/", (req, res)=>{
     res.render("home",{
