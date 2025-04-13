@@ -14,7 +14,9 @@ app.set("views", path.resolve("./views"))
 app.use(cookieParser())
 app.use(checkForAuthenticationCookie("token"))
 app.use(express.urlencoded({extended: false}))
-app.use(express.static(path.resolve("./public")));
+// app.use(express.static(path.resolve("./public")));
+app.use(express.static("public"));
+
 // app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/blogify').then((e)=>{console.log("Mongodb connected")})

@@ -15,12 +15,12 @@
 
     <div class="container mt-4">
         
-        <img src="<%= blog.createdBy.profileImageUrl %>" width="100px"><%= blog.createdBy.fullName %>
+        <img src="<%= blog.createdBy.profileImageUrl %>" width="50px"><%= blog.createdBy.fullName %>
         
     </div>
 
     <div class="container mt-3">
-        <h1>Comments</h1>
+        <h1>Comments (<%= comments.length %>)</h1>
         <% if (locals.user) { %>
             <form action="/blog/comment/<%= blog._id %>" method="post">
                 <div class="mb-3">
@@ -28,8 +28,17 @@
                     <button class="btn btn-sm btn-primary">Add</button>
                 </div>
             </form>
+            
         <% } %>
+        <div class="mt-3">
+            <% comments.forEach(comment => { %>
+                <img src="<%= comment.createdBy.profileImageUrl %>" width="50px">: <pre><%= comment.content %></pre>
+                
+            <% }) %>
+        </div>
     </div>
+
+    
 
     <%- include('./partials/scripts') %>
 </body>
