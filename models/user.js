@@ -15,7 +15,7 @@ const userSchema = new Schema({
     },
     profileImageUrl:{
         type: String,
-        default: "./images/profile.svg"
+        default: "./images/profile.jpg"
     },
     salt:{
         type: String,
