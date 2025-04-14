@@ -1,6 +1,5 @@
 const express = require("express")
 const path = require("path")
-const PORT = 7000
 const app = express()
 const userRoutes = require('./routes/user')
 const blogRoutes = require('./routes/blog')
@@ -16,10 +15,11 @@ app.use(checkForAuthenticationCookie("token"))
 app.use(express.urlencoded({extended: false}))
 // app.use(express.static(path.resolve("./public")));
 app.use(express.static("public"));
+const PORT = process.env.PORt || 7000
 
 // app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/blogify').then((e)=>{console.log("Mongodb connected")})
+mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connected")})
 
 app.get("/", async (req, res)=>{
     const allBlogs = await Blog.find({});
