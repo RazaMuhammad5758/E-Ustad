@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express")
 const path = require("path")
 const app = express()
@@ -16,7 +17,6 @@ app.use(express.urlencoded({extended: false}))
 // app.use(express.static(path.resolve("./public")));
 app.use(express.static("public"));
 const PORT = process.env.PORt || 7000
-
 // app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connected")})
@@ -24,6 +24,14 @@ mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connecte
 app.get("/", async (req, res)=>{
     const allBlogs = await Blog.find({});
     res.render("home",{
+        // user: req.user,
+        // blogs: allBlogs
+
+    })
+})
+app.get("/professionals", async (req, res)=>{
+    const allBlogs = await Blog.find({});
+    res.render("professionals",{
         user: req.user,
         blogs: allBlogs
 
@@ -31,7 +39,12 @@ app.get("/", async (req, res)=>{
 })
 app.use("/user", userRoutes)
 app.use("/blog", blogRoutes)
-
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    res.locals.error = req.session.error || null;
+    next();
+  });
+  
 app.listen(PORT, ()=>{
     console.log(`Server started at ${PORT}`)
 })

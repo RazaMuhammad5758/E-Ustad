@@ -2,27 +2,80 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %>
-    <title>Home</title>
+    <title>Home - SkillConnect</title>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #007bffb6, #00c6ff);
+        }
+    </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
 
-    
-    <div class="container mt-3 d-flex flex-row gap-3">
-    <% blogs.forEach(blog => { %>
-            <div class="card" style="width: 18rem;">
-                <img src="<%=blog.coverImageURL %>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= blog.title %></h5>
-                  
-                  <a href="/blog/<%= blog._id %>" class="btn btn-primary">View More</a>
-                </div>
-              </div>
-              
-              <% }) %>
-            </div>
+    <header class="hero-bg text-white text-center py-5 mb-4">
+        <div class="container">
+            <h1 class="display-4">Find & Hire Skilled Professionals</h1>
+            <p class="lead">Connect with trusted plumbers, electricians, mechanics, and more near you.</p>
+            <form class="d-flex justify-content-center mt-4" role="search">
+                <input class="form-control w-50 me-2" type="search" placeholder="Search professionals e.g. plumber" aria-label="Search">
+                <button class="btn btn-light text-primary fw-bold" type="submit">Search</button>
+            </form>
+        </div>
+    </header>
 
-    
+    <section class="container mb-5">
+        <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-primary shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-tools fs-1 text-primary"></i>
+                        <h5 class="card-title mt-3">Electrician</h5>
+                        <p class="card-text">Need help with wiring or power issues?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-info shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-water fs-1 text-info"></i>
+                        <h5 class="card-title mt-3">Plumber</h5>
+                        <p class="card-text">Fix water leaks and plumbing problems.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-danger shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-car-front fs-1 text-danger"></i>
+                        <h5 class="card-title mt-3">Mechanic</h5>
+                        <p class="card-text">Vehicle issues? Find expert car repair help.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-success shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-brush fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">Painter</h5>
+                        <p class="card-text">Give your home a fresh new look.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="mb-4 text-center text-dark">Featured Professionals</h2>
+            <div class="text-center mt-4">
+                <a href="/professionals">
+                    <button class="btn btn-outline-primary px-4 py-2 fw-semibold">View Profiles</button>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <%- include('./partials/scripts') %>
 </body>
 </html>
