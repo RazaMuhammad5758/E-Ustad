@@ -8,51 +8,37 @@
             background: linear-gradient(135deg, #007bffb6, #00c6ff);
             position: relative;
             overflow: hidden;
+            padding: 0;
         }
-    
-        /* Brush animation to cover 100% width */
-        
-        .wrench {
-    position: absolute;
-    left: -150px;  /* Start off the left side */
-    animation: moveRight2 10s ease-in-out infinite;  /* Animation: Move Right */
-    width: 100px;  /* Adjust the width as needed */
-    z-index: -1;  /* Lower z-index for the brush so it goes behind the text */
-    opacity: 1;  /* Start with the image hidden */
-    /* transition: opacity 0.5s ease-in-out;  Smooth opacity transition */
-            }
-    
-        /* Define the animation */
-        
-        @keyframes moveRight2 {
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* Start position of the brush image */
+            width: 100%;
+            height: 100%;
+            background: url('/public/images/brush.png') no-repeat center center;
+            background-size: contain;
+            animation: slideBrush 6s linear infinite;
+            z-index: -1; /* Ensure it's behind the text */
+        }
+
+        @keyframes slideBrush {
             0% {
-                left: -150px; /* Start position (off-screen to the left) */
+                left: -100%;
             }
             100% {
-                left: 100vw; /* End position (off-screen to the right) */
+                left: 100%; /* Move the image from left to right */
             }
         }
-    
-        /* Ensure the text stays above the brush */
-        .hero-bg .container {
-            position: relative;
-            z-index: 2; /* Higher z-index for the text and form */
-        }
     </style>
-    
+</head>
 <body>
     <%- include('./partials/nav') %>
 
     <header class="hero-bg text-white text-center py-5 mb-4">
-
-
         <div class="container">
-                        
-            <div class="d-flex ms-auto align-items-center">
-                <div class="tool-wrapper2">
-                    <img src="/images/wrench.png" alt="wrench img" class="wrench">
-                </div>
-            </div>            
             <h1 class="display-4">Find & Hire Skilled Professionals</h1>
             <p class="lead">Connect with trusted plumbers, electricians, mechanics, and more near you.</p>
             <form class="d-flex justify-content-center mt-4" role="search">
@@ -62,7 +48,7 @@
         </div>
     </header>
     
-    
+
     <section class="container mb-5">
         <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
         <div class="row text-center">
@@ -118,17 +104,4 @@
 
     <%- include('./partials/scripts') %>
 </body>
-<script>
-//     window.addEventListener('load', () => {
-//     setTimeout(() => {
-//         const wrench = document.querySelector('.wrench');
-      
-
-//         // Trigger the animation after fading in
-//         wrench.style.animation = 'moveRight 10s ease-in-out infinite';  // Start the animation
-//     }, 100);  // Wait for 10 seconds after page load
-// });
-   
-
-</script>
 </html>
