@@ -56,7 +56,7 @@ router.post("/",  upload.array("coverImages", 5), async (req, res)=>{
         body,
         title,
         createdBy: req.user._id,
-        coverImageURLs: imageUrls   
+        coverImageURL: imageUrls   
     })
     return res.redirect(`/blog/${blog._id}`)
 })

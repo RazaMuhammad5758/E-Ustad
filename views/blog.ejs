@@ -26,8 +26,8 @@
         <div class="mb-4 text-center">
             <h1 class="display-5"><%= blog.title %></h1>
             <div class="row">
-                <% if (Array.isArray(blog.coverImageURLs)) { %>
-                    <% blog.coverImageURLs.forEach(image => { %>
+                <% if (Array.isArray(blog.coverImageURL)) { %>
+                    <% blog.coverImageURL.forEach(image => { %>
                         <div class="col-md-4 mb-3">
                             <img src="<%= image %>" class="img-fluid rounded shadow-sm" alt="Blog Image">
                         </div>
