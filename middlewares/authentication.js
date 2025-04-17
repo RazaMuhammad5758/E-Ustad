@@ -1,18 +1,22 @@
 const { validateToken } = require("../services/authentication");
+const User = require("../models/user"); // make sure to import your User model
 
 function checkForAuthenticationCookie(cookieName) {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     const tokenCookieValue = req.cookies[cookieName];
     if (!tokenCookieValue) {
-      return next(); // No token, just continue to the next middleware
+      return next();
     }
+
     try {
       const userPayload = validateToken(tokenCookieValue);
-      req.user = userPayload; // Save user in request object
-      res.locals.user = userPayload; // Also store it in res.locals for EJS
+      const user = await User.findById(userPayload._id); // Fetch full user
+      req.user = user;
+      res.locals.user = user;
     } catch (error) {
       console.log("Token verification failed:", error);
     }
+
     return next();
   };
 }

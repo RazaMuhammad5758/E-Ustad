@@ -9,8 +9,8 @@ const blogSchema = new Schema({
         type:String,
         require: true
     },
-    coverImageURL:{
-        type:String,
+    coverImageURLs:{
+        type:[String],
         require: false
     },
     createdBy:{
@@ -19,6 +19,8 @@ const blogSchema = new Schema({
     }
 
 }, { timestamps: true})
+
+
 
 const Blog = model("blog", blogSchema)
 module.exports = Blog

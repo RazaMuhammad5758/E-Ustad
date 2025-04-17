@@ -39,11 +39,11 @@ app.get("/professionals", async (req, res)=>{
 })
 app.use("/user", userRoutes)
 app.use("/blog", blogRoutes)
-app.use((req, res, next) => {
-    res.locals.user = req.session.user || null;
-    res.locals.error = req.session.error || null;
-    next();
-  });
+// app.use((req, res, next) => {
+//     res.locals.user = req.session.user || null;
+//     res.locals.error = req.session.error || null;
+//     next();
+//   });
   
 app.listen(PORT, ()=>{
     console.log(`Server started at ${PORT}`)

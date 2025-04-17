@@ -49,13 +49,14 @@ router.post("/comment/:blogId", async (req, res)=>{
 })
 
 
-router.post("/",  upload.single("coverImage"), async (req, res)=>{
+router.post("/",  upload.array("coverImages", 5), async (req, res)=>{
     const {title, body} = req.body;
+    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
     const blog = await Blog.create({
         body,
         title,
         createdBy: req.user._id,
-        coverImageURL: `/uploads/${req.file.filename}`
+        coverImageURLs: imageUrls   
     })
     return res.redirect(`/blog/${blog._id}`)
 })

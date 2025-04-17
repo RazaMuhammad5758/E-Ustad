@@ -11,9 +11,14 @@ router.get("/signin", (req, res) => {
 router.get("/signup", (req, res) => {
   return res.render("signUp", { currentRoute: 'signup', user: req.user });
 });
-router.get("/professionals", (req, res) => {
-  return res.render("professionals", { currentRoute: 'professionals', user: req.user });
+router.get("/professionals", async (req, res) => {
+  const allBlogs = await Blog.find({});
+  res.render("professionals", {
+      user: req.user || null, // fallback to null to avoid error
+      blogs: allBlogs,
+  });
 });
+
 
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
