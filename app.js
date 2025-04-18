@@ -13,22 +13,25 @@ app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 app.use(cookieParser())
 app.use(checkForAuthenticationCookie("token"))
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 // app.use(express.static(path.resolve("./public")));
 app.use(express.static("public"));
 const PORT = process.env.PORt || 7000
 // app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connected")})
-
-app.get("/", async (req, res)=>{
-    const allBlogs = await Blog.find({});
-    res.render("home",{
-        // user: req.user,
-        // blogs: allBlogs
-
-    })
-})
+// Example route in app.js or routes file
+app.get('/', async (req, res) => {
+    try {
+      const blogs = await Blog.find().limit(4); // Fetch some blog posts (adjust as needed)
+      res.render('home', { blogs });
+    } catch (err) {
+      console.error(err);
+      res.render('home', { blogs: [] }); // fallback to empty array on error
+    }
+  });
+  
 app.get("/professionals", async (req, res)=>{
     const allBlogs = await Blog.find({});
     res.render("professionals",{
@@ -37,6 +40,17 @@ app.get("/professionals", async (req, res)=>{
 
     })
 })
+app.get('/user/profile', (req, res) => {
+    const user = req.user;
+
+    if (!user) {
+      return res.redirect('/user/signin');
+    }
+
+    res.render('user/profile', { user });
+});
+
+  
 app.use("/user", userRoutes)
 app.use("/blog", blogRoutes)
 // app.use((req, res, next) => {

@@ -9,50 +9,78 @@
             position: relative;
             overflow: hidden;
         }
-    
-        /* Brush animation to cover 100% width */
         
-        .wrench {
-    position: absolute;
-    left: -150px;  /* Start off the left side */
-    animation: moveRight2 10s ease-in-out infinite;  /* Animation: Move Right */
-    width: 100px;  /* Adjust the width as needed */
-    z-index: -1;  /* Lower z-index for the brush so it goes behind the text */
-    opacity: 1;  /* Start with the image hidden */
-    /* transition: opacity 0.5s ease-in-out;  Smooth opacity transition */
-            }
-    
-        /* Define the animation */
+        .rotating-images {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 700px;
+            height: 700px;
+            transform: translate(-50%, -50%);
+            z-index: 0; /* behind the text */
+            opacity: 0.1; /* subtle in background */
+            pointer-events: none;
+        }
         
-        @keyframes moveRight2 {
-            0% {
-                left: -150px; /* Start position (off-screen to the left) */
+        .machine2,
+        .machine {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .machine2 {
+            width: 50%;
+            animation: rotate-normal 20s linear infinite;
+            filter: brightness(0) invert(1);
+        }
+        
+        .machine {
+            width: 50%;
+            opacity: 0.8;
+            animation: rotate-reverse 10s linear infinite;
+        }
+        
+        @keyframes rotate-reverse {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
             }
-            100% {
-                left: 100vw; /* End position (off-screen to the right) */
+            to {
+                transform: translate(-50%, -50%) rotate(-360deg);
             }
         }
-    
-        /* Ensure the text stays above the brush */
-        .hero-bg .container {
-            position: relative;
-            z-index: 2; /* Higher z-index for the text and form */
+        
+        @keyframes rotate-normal {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
-    </style>
-    
+        
+        @media (max-width: 768px) {
+            .tool-wrapper {
+                display: none;
+            }
+        }
+        </style>
+        
 <body>
     <%- include('./partials/nav') %>
 
-    <header class="hero-bg text-white text-center py-5 mb-4">
+    <header class="hero-bg text-white text-center py-5">
 
 
         <div class="container">
-                        
-            <div class="d-flex ms-auto align-items-center">
-                <div class="tool-wrapper2">
-                    <img src="/images/wrench.png" alt="wrench img" class="wrench">
+            <div class="d-flex ms-auto align-items-center ">
+                <div class="rotating-images">
+                  <img src="/images/machine2.png" alt="Base Tool" class="machine2">
+                  <img src="/images/machine.png" alt="Rotating Tool" class="machine">
                 </div>
-            </div>            
+            </div>          
+                        
             <h1 class="display-4">Find & Hire Skilled Professionals</h1>
             <p class="lead">Connect with trusted plumbers, electricians, mechanics, and more near you.</p>
             <form class="d-flex justify-content-center mt-4" role="search">
@@ -60,75 +88,78 @@
                 <button class="btn btn-light text-primary fw-bold" type="submit">Search</button>
             </form>
         </div>
+        <section class="container">
+            <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
+            <div class="row text-center">
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-primary shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-tools fs-1 text-primary"></i>
+                            <h5 class="card-title mt-3">Electrician</h5>
+                            <p class="card-text">Need help with wiring or power issues?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-info shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-water fs-1 text-info"></i>
+                            <h5 class="card-title mt-3">Plumber</h5>
+                            <p class="card-text">Fix water leaks and plumbing problems.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-danger shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-car-front fs-1 text-danger"></i>
+                            <h5 class="card-title mt-3">Mechanic</h5>
+                            <p class="card-text">Vehicle issues? Find expert car repair help.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-success shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-brush fs-1 text-success"></i>
+                            <h5 class="card-title mt-3">Painter</h5>
+                            <p class="card-text">Give your home a fresh new look.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-5" style="background-color: #84d4fd;">
+            <div class="container">
+                <h2 class="mb-4 text-center text-dark">Featured Professionals</h2>
+                <div class="container mt-3 d-flex flex-row gap-3">
+                    <% blogs.forEach(blog => { %>
+                        <div class="card" style="width: 18rem;">
+                            <!-- Show only the first image from the coverImageURL array -->
+                            <img src="<%= blog.coverImageURL[0] %>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title"><%= blog.title %></h5>
+                              <a href="/blog/<%= blog._id %>" class="btn btn-primary">View More</a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/professionals">
+                        <button class="btn btn-outline-primary px-4 py-2 fw-semibold">View all Profiles</button>
+                    </a>
+                </div>
+            </div>
+        </section>
     </header>
     
     
-    <section class="container mb-5">
-        <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
-        <div class="row text-center">
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 border-primary shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-tools fs-1 text-primary"></i>
-                        <h5 class="card-title mt-3">Electrician</h5>
-                        <p class="card-text">Need help with wiring or power issues?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 border-info shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-water fs-1 text-info"></i>
-                        <h5 class="card-title mt-3">Plumber</h5>
-                        <p class="card-text">Fix water leaks and plumbing problems.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 border-danger shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-car-front fs-1 text-danger"></i>
-                        <h5 class="card-title mt-3">Mechanic</h5>
-                        <p class="card-text">Vehicle issues? Find expert car repair help.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 border-success shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-brush fs-1 text-success"></i>
-                        <h5 class="card-title mt-3">Painter</h5>
-                        <p class="card-text">Give your home a fresh new look.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
-    <section class="bg-light py-5">
-        <div class="container">
-            <h2 class="mb-4 text-center text-dark">Featured Professionals</h2>
-            <div class="text-center mt-4">
-                <a href="/professionals">
-                    <button class="btn btn-outline-primary px-4 py-2 fw-semibold">View Profiles</button>
-                </a>
-            </div>
-        </div>
-    </section>
+    
 
     <%- include('./partials/scripts') %>
+    <%- include('./partials/footer') %>
 </body>
-<script>
-//     window.addEventListener('load', () => {
-//     setTimeout(() => {
-//         const wrench = document.querySelector('.wrench');
-      
 
-//         // Trigger the animation after fading in
-//         wrench.style.animation = 'moveRight 10s ease-in-out infinite';  // Start the animation
-//     }, 100);  // Wait for 10 seconds after page load
-// });
-   
-
-</script>
 </html>
