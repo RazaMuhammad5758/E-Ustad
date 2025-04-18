@@ -25,11 +25,19 @@ const userSchema = new Schema({
         type: String,
         required: true,  
     },
-    role:{
+    phone:{
+        type: Number,
+        required: true,  
+    },
+    address: {
         type: String,
-        enum: ['USER', 'ADMIN'],
-        default: 'USER'
-    }
+        required: true
+    },
+    userRole: {
+        type: String,
+        enum: ['CLIENT', 'PROFESSIONAL'],
+        default: 'CLIENT'
+    },
 }, 
 {timestamps: true})
 
