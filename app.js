@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connecte
 // Example route in app.js or routes file
 app.get('/', async (req, res) => {
     try {
-      const blogs = await Blog.find().limit(4); // Fetch some blog posts (adjust as needed)
+      const blogs = await Blog.find().limit(4);
       res.render('home', { blogs });
     } catch (err) {
       console.error(err);
