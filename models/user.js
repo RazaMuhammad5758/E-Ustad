@@ -38,6 +38,13 @@ const userSchema = new Schema({
         enum: ['CLIENT', 'PROFESSIONAL'],
         default: 'CLIENT'
     },
+    profession: {
+        type: String,
+        required: function() {
+          return this.role === 'professional';
+        },
+      }
+      
 }, 
 {timestamps: true})
 

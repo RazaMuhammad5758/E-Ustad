@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
       res.render('home', { blogs });
     } catch (err) {
       console.error(err);
-      res.render('home', { blogs: [] }); // fallback to empty array on error
+      res.render('home', { blogs: [] }); 
     }
   });
   

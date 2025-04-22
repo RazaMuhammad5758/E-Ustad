@@ -1,13 +1,12 @@
-
 <head>
   <style>
     .tool-wrapper {
       position: relative;
-      width: 40px; /* reduced from 80px */
-      height: 40px; /* reduced from 80px */
+      width: 40px;
+      height: 40px;
       margin-left: 15px;
     }
-  
+
     .static-tool {
       width: 100%;
       height: auto;
@@ -15,18 +14,17 @@
       filter: brightness(0) invert(1);
       animation: rotate-normal 10s linear infinite;
     }
-  
+
     .rotating-tool {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 60%; /* smaller relative to new container */
+      width: 60%;
       transform: translate(-50%, -50%);
       opacity: 0.8;
       animation: rotate-reverse 6s linear infinite;
-      /* filter: brightness(0) invert(1); */
     }
-  
+
     @keyframes rotate-reverse {
       from {
         transform: translate(-50%, -50%) rotate(0deg);
@@ -35,7 +33,7 @@
         transform: translate(-50%, -50%) rotate(-360deg);
       }
     }
-  
+
     @keyframes rotate-normal {
       from {
         transform: rotate(0deg);
@@ -44,19 +42,28 @@
         transform: rotate(360deg);
       }
     }
-  
+
     @media (max-width: 768px) {
       .tool-wrapper {
         display: none;
       }
     }
   </style>
-  
 </head>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
+    <!-- Rotating icon aligned to the right -->
+    <div class="d-flex ms-auto me-3 align-items-center">
+      <div class="tool-wrapper">
+        <img src="/images/machine2.png" alt="Base Tool" class="static-tool">
+        <img src="/images/machine.png" alt="Rotating Tool" class="rotating-tool">
+      </div>
+    </div>
+    
     <a class="navbar-brand" href="/">E-Ustad</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -65,25 +72,25 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/Professionals">Professionals</a>
         </li>
+
         <% if (locals.user) { %>
-          <!-- Check if the user is an admin to show the "Add Blog" option -->
-          <% if (user.role === 'PROFESSIONAL') { %>
+          <% if (locals.user.role === 'PROFESSIONAL') { %>
             <li class="nav-item">
               <a class="nav-link active" href="/blog/add-new">Add Blog</a>
             </li>
           <% } %>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <!-- Display User's Profile Image and Full Name -->
-              <%= user.fullName %>
-              <img src="<%= user.profileImageUrl %>" alt="Profile Image" class="rounded-circle" width="30" height="30" style="object-fit: cover; margin-right: 10px;">
+              <%= locals.user.fullName %>
+              <img src="<%= locals.user.profileImageUrl %>" alt="Profile Image" class="rounded-circle" width="30" height="30" style="object-fit: cover; margin-right: 10px;">
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/user/profile">Your Profile</a></li>
               <li><a class="dropdown-item active" href="/user/logout">Logout</a></li>
             </ul>
           </li>
-          
+
         <% } else { %>
           <li class="nav-item">
             <a class="nav-link active" href="/user/signup">Create account</a>
@@ -93,14 +100,6 @@
           </li>
         <% } %>
       </ul>
-
-      <!-- Rotating icon aligned to the right -->
-      <div class="d-flex ms-auto align-items-center">
-        <div class="tool-wrapper">
-          <img src="/images/machine2.png" alt="Base Tool" class="static-tool">
-          <img src="/images/machine.png" alt="Rotating Tool" class="rotating-tool">
-        </div>
-      </div>
     </div>
   </div>
 </nav>
@@ -112,4 +111,3 @@
     </div>
   </div>
 <% } %>
-

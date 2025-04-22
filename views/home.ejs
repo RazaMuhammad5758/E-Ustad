@@ -65,29 +65,29 @@
                 display: none;
             }
         }
-        </style>
-        
+    </style>
+</head>
+
 <body>
     <%- include('./partials/nav') %>
 
     <header class="hero-bg text-white text-center py-5">
-
-
         <div class="container">
             <div class="d-flex ms-auto align-items-center ">
                 <div class="rotating-images">
-                  <img src="/images/machine2.png" alt="Base Tool" class="machine2">
-                  <img src="/images/machine.png" alt="Rotating Tool" class="machine">
+                    <img src="/images/machine2.png" alt="Base Tool" class="machine2">
+                    <img src="/images/machine.png" alt="Rotating Tool" class="machine">
                 </div>
-            </div>          
+            </div>
                         
             <h1 class="display-4">Find & Hire Skilled Professionals</h1>
             <p class="lead">Connect with trusted plumbers, electricians, mechanics, and more near you.</p>
-            <form class="d-flex justify-content-center mt-4" role="search">
-                <input class="form-control w-50 me-2" type="search" placeholder="Search professionals e.g. plumber" aria-label="Search">
+            <form class="d-flex justify-content-center mt-4" role="search" action="/professionals" method="GET">
+                <input class="form-control w-50 me-2" type="search" placeholder="Search professionals e.g. plumber" aria-label="Search" name="searchQuery">
                 <button class="btn btn-light text-primary fw-bold" type="submit">Search</button>
             </form>
         </div>
+
         <section class="container">
             <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
             <div class="row text-center">
@@ -129,6 +129,7 @@
                 </div>
             </div>
         </section>
+
         <section class="py-5" style="background-color: #84d4fd;">
             <div class="container">
                 <h2 class="mb-4 text-center text-dark">Featured Professionals</h2>
@@ -153,13 +154,7 @@
         </section>
     </header>
     
-    
-    
-
-    
-
     <%- include('./partials/scripts') %>
     <%- include('./partials/footer') %>
 </body>
-
 </html>

@@ -2,30 +2,79 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %>
-    <title>signin</title>
+    <title>Sign In</title>
+    <style>
+        .form-container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f8f9faac;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+        }
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            z-index: 2;
+            color: #6c757d;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        
+        body {
+          background: url('/images/bg2.png') no-repeat center center fixed;
+          background-size: cover;
+          min-height: 100vh;
+        }
+  
+    </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
 
-    <div class="container mt-4">
-        <form action="/user/signin" method="post">
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+    <div class="container mt-5">
+        <div class="form-container">
+            <div class="form-title">Sign In to Your Account</div>
+            <form action="/user/signin" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3 password-wrapper">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+                    <span class="toggle-password" onclick="togglePassword()">
+                        <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                    </span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            </form>
+        </div>
     </div>
-    
-    
-    
-    
-    
+
     <%- include('./partials/scripts') %>
+    <!-- Bootstrap Icons CDN (for the eye icon) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('exampleInputPassword1');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const isPassword = passwordInput.type === 'password';
+
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleIcon.classList.toggle('bi-eye');
+            toggleIcon.classList.toggle('bi-eye-slash');
+        }
+    </script>
 </body>
 </html>
