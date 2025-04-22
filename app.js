@@ -21,6 +21,7 @@ const PORT = process.env.PORt || 7000
 // app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connected")})
+
 // Example route in app.js or routes file
 app.get('/', async (req, res) => {
     try {
