@@ -49,17 +49,32 @@ router.post("/comment/:blogId", async (req, res)=>{
 })
 
 
-router.post("/",  upload.array("coverImages", 5), async (req, res)=>{
-    const {title, body} = req.body;
+router.post("/", upload.array("coverImages", 5), async (req, res) => {
+    const { title, body, category } = req.body;  // Extract category, title, and body from form data
+
+    // Check if category is provided
+    if (!category) {
+        return res.status(400).send("Category is required");  // If no category is provided, send error response
+    }
+
     const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
-    const blog = await Blog.create({
-        body,
-        title,
-        createdBy: req.user._id,
-        coverImageURL: imageUrls   
-    })
-    return res.redirect(`/blog/${blog._id}`)
-})
+    
+    try {
+        const blog = await Blog.create({
+            title,
+            body,
+            category,  // Store the category
+            createdBy: req.user._id,
+            coverImageURL: imageUrls
+        });
+        
+        return res.redirect(`/blog/${blog._id}`);
+    } catch (error) {
+        console.error("Error creating blog:", error);
+        return res.status(500).send("Something went wrong");
+    }
+});
+
 
 
 
