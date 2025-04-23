@@ -43,7 +43,19 @@ const userSchema = new Schema({
         required: function() {
           return this.role === 'professional';
         },
-      }
+    },
+    cnicImage: {
+        type: String,
+        required: function () {
+          return this.role === 'professional';
+        }
+    },
+    experience: {
+        type: Number,
+        required: function () {
+          return this.role === 'professional';
+        }
+    },
       
 }, 
 {timestamps: true})
