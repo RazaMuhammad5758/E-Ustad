@@ -60,20 +60,49 @@
         </div>
 
         <!-- Profession (only if role is professional) -->
-        <div class="mb-3" id="professionField" style="display: none;">
-          <label for="profession" class="form-label">Select Your Profession</label>
-          <select class="form-select" name="profession" id="profession">
-            <option value="" selected disabled>Choose a profession</option>
-            <option value="plumber">Plumber</option>
-            <option value="electrician">Electrician</option>
-            <option value="mechanic">Mechanic</option>
-            <option value="painter">Painter</option>
-            <option value="carpenter">Carpenter</option>
-            <option value="ac_technician">AC Technician</option>
-            <option value="welder">Welder</option>
-            <option value="driver">Driver</option>
-            <option value="gardener">Gardener</option>
-          </select>
+
+        <!-- Profession (only if role is professional) -->
+<div class="mb-3" id="professionField" style="display: none;">
+  <label for="profession" class="form-label">Select Your Profession</label>
+  <select class="form-select" name="profession" id="profession">
+    <option value="" selected disabled>Choose a profession</option>
+    <option value="plumber">Plumber</option>
+    <option value="electrician">Electrician</option>
+    <option value="mechanic">Mechanic</option>
+    <option value="painter">Painter</option>
+    <option value="carpenter">Carpenter</option>
+    <option value="ac_technician">AC Technician</option>
+    <option value="welder">Welder</option>
+    <option value="driver">Driver</option>
+    <option value="gardener">Gardener</option>
+    <option value="security_guard">Security Guard</option>
+    <option value="mason">Mason</option>
+    <option value="roofer">Roofer</option>
+    <option value="glass_installer">Glass Installer</option>
+    <option value="floor_tiler">Floor Tiler</option>
+    <option value="pest_control">Pest Control Specialist</option>
+    <option value="locksmith">Locksmith</option>
+    <option value="interior_designer">Interior Designer</option>
+    <option value="cleaning_expert">Cleaning Expert</option>
+    <option value="laundry">Laundry/Washing Services</option>
+    <option value="waterproofing">Waterproofing Expert</option>
+    <option value="solar_installer">Solar Panel Installer</option>
+    <option value="network_technician">Network Technician</option>
+    <option value="cctv_installer">CCTV Installer</option>
+    <option value="it_support">IT Support Technician</option>
+    <option value="landscaper">Landscaper</option>
+  </select>
+</div>
+
+        <div class="mb-3" id="cnicImageField" style="display: none;">
+          <label for="cnicImage" class="form-label">CNIC Image</label>
+          <input type="file" name="cnicImage" class="form-control" id="cnicImage" accept="image/*">
+        </div>
+        
+        <!-- Experience (only if role is professional) -->
+        <div class="mb-3" id="experienceField" style="display: none;">
+          <label for="experience" class="form-label">Years of Experience</label>
+          <input type="number" name="experience" class="form-control" id="experience" min="0" placeholder="Enter number of years">
         </div>
 
         <!-- Profile Image -->
@@ -90,20 +119,24 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const role = document.getElementById('role');
-      const professionField = document.getElementById('professionField');
-      const profession = document.getElementById('profession');
+    const role = document.getElementById('role');
+    const professionField = document.getElementById('professionField');
+    const profession = document.getElementById('profession');
+    const cnicImageField = document.getElementById('cnicImageField');
+    const experienceField = document.getElementById('experienceField');
 
-      role.addEventListener('change', function () {
-        if (role.value === 'professional') {
-          professionField.style.display = 'block';
-          profession.required = true;
-        } else {
-          professionField.style.display = 'none';
-          profession.required = false;
-        }
-      });
+    role.addEventListener('change', function () {
+      const isProfessional = role.value === 'professional';
+
+      professionField.style.display = isProfessional ? 'block' : 'none';
+      cnicImageField.style.display = isProfessional ? 'block' : 'none';
+      experienceField.style.display = isProfessional ? 'block' : 'none';
+
+      profession.required = isProfessional;
+      document.getElementById('cnicImage').required = isProfessional;
+      document.getElementById('experience').required = isProfessional;
     });
+  });
   </script>
 
   <%- include('./partials/scripts') %>

@@ -22,6 +22,14 @@ const PORT = process.env.PORt || 7000
 
 mongoose.connect(process.env.MONGO_URL).then((e)=>{console.log("Mongodb connected")})
 
+app.use((req, res, next) => {
+  // This will set the error in locals for all views
+  res.locals.error = req.error || null;
+  next();
+});
+app.get("/someRoute", (req, res) => {
+  res.render("home", { error: "Some error message" });
+});
 // Example route in app.js or routes file
 app.get('/', async (req, res) => {
     try {
@@ -33,14 +41,31 @@ app.get('/', async (req, res) => {
     }
   });
   
-app.get("/professionals", async (req, res)=>{
-    const allBlogs = await Blog.find({});
-    res.render("professionals",{
-        user: req.user,
-        blogs: allBlogs
+  app.get("/professionals", async (req, res) => {
+    const { category } = req.query; // Get category from query parameters
+    let blogs;
 
-    })
-})
+    try {
+        // If category is provided, filter the blogs by category, otherwise, fetch all
+        if (category) {
+            blogs = await Blog.find({ category }); // Assuming Blog has a `category` field
+        } else {
+            blogs = await Blog.find(); // Fetch all blogs if no category is provided
+        }
+
+        res.render("professionals", {
+            user: req.user,
+            blogs: blogs
+        });
+    } catch (err) {
+        console.error("Error in /professionals route:", err.message);
+        res.render("professionals", {
+            user: req.user,
+            blogs: [] // In case of error, send an empty list of blogs
+        });
+    }
+});
+
 app.get('/user/profile', (req, res) => {
     const user = req.user;
 

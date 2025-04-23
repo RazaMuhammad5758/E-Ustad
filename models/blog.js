@@ -16,7 +16,13 @@ const blogSchema = new Schema({
     createdBy:{
         type: Schema.Types.ObjectId,
         ref: "user"
-    }
+    },
+    category: {
+        type: String,
+        enum: ['Plumber', 'Electrician', 'Mechanic', 'Painter', 'Carpenter', 'AC Technician', 'Welder', 'Driver', 'Gardener', 'Security Guard', 'Mason', 'Roofer', 'Glass Installer', 'Floor Tiler', 'Pest Control Specialist', 'Locksmith', 'Interior Designer', 'Cleaning Expert', 'Laundry/Washing Services', 'Waterproofing Expert', 'Solar Panel Installer', 'Network Technician', 'CCTV Installer', 'IT Support Technician', 'Landscaper'],
+        required: true
+      },
+      
 
 }, { timestamps: true})
 

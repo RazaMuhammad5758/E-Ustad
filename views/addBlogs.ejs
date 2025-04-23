@@ -7,29 +7,40 @@
 <body>
     <%- include('./partials/nav') %>
 
-    
     <div class="container mt-3">
         <form action="/blog" method="post" enctype="multipart/form-data">
             <div class="mb-3">
-            <label for="coverImages" class="form-label">Cover Image</label>
-              <input type="file" name="coverImages" multiple class="form-control" id="coverImages" aria-describedby="coverImages" accept="image/*">
+                <label for="coverImages" class="form-label">Cover Image</label>
+                <input type="file" name="coverImages" multiple class="form-control" id="coverImages" aria-describedby="coverImages" accept="image/*">
             </div>
+
             <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-              <input type="text" name="title" class="form-control" id="title" aria-describedby="title">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title" class="form-control" id="title" aria-describedby="title" required>
             </div>
+
             <div class="mb-3">
-                <label for="body">Body</label>
-                <textarea name="body" class="form-control"  id="body"></textarea>
+                <label for="body" class="form-label">Body</label>
+                <textarea name="body" class="form-control" id="body" required></textarea>
             </div>
+
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" id="category" class="form-control" required>
+                    <option value="">Select a category</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Plumber">Plumber</option>
+                    <option value="Mechanic">Mechanic</option>
+                    <option value="Painter">Painter</option>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <button class="btn btn-primary">Submit</button>
-                
             </div>
         </form>
     </div>
 
-    
     <%- include('./partials/scripts') %>
 </body>
 </html>

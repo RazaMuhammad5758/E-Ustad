@@ -9,7 +9,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .rotating-images {
             position: absolute;
             top: 50%;
@@ -17,11 +17,11 @@
             width: 700px;
             height: 700px;
             transform: translate(-50%, -50%);
-            z-index: 0; /* behind the text */
-            opacity: 0.1; /* subtle in background */
+            z-index: 0;
+            opacity: 0.1;
             pointer-events: none;
         }
-        
+
         .machine2,
         .machine {
             position: absolute;
@@ -29,19 +29,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        
+
         .machine2 {
             width: 50%;
             animation: rotate-normal 20s linear infinite;
             filter: brightness(0) invert(1);
         }
-        
+
         .machine {
             width: 50%;
             opacity: 0.8;
             animation: rotate-reverse 10s linear infinite;
         }
-        
+
         @keyframes rotate-reverse {
             from {
                 transform: translate(-50%, -50%) rotate(0deg);
@@ -50,7 +50,7 @@
                 transform: translate(-50%, -50%) rotate(-360deg);
             }
         }
-        
+
         @keyframes rotate-normal {
             from {
                 transform: translate(-50%, -50%) rotate(0deg);
@@ -59,12 +59,63 @@
                 transform: translate(-50%, -50%) rotate(360deg);
             }
         }
-        
+
         @media (max-width: 768px) {
             .tool-wrapper {
                 display: none;
             }
         }
+
+        .category-container {
+    display: flex;
+    gap: 1rem;
+    overflow-x: hidden;  /* Horizontal scroll hidden */
+    flex-wrap: no-wrap;
+    height: 350px;  /* Increased height of the card container */
+}
+
+        .category-card {
+            flex-shrink: 0;
+            min-width: 220px;
+            background-color: white;  /* White background */
+            border: 1px solid #ccc;  /* Light border */
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+            border-color: #007bff;  /* Hover border color */
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            color: #007bff;
+        }
+
+        /* Arrows for scroll */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #scrollLeft {
+            left: 0;
+        }
+
+        #scrollRight {
+            right: 0;
+        }
+
     </style>
 </head>
 
@@ -73,13 +124,13 @@
 
     <header class="hero-bg text-white text-center py-5">
         <div class="container">
-            <div class="d-flex ms-auto align-items-center ">
+            <div class="d-flex ms-auto align-items-center">
                 <div class="rotating-images">
                     <img src="/images/machine2.png" alt="Base Tool" class="machine2">
                     <img src="/images/machine.png" alt="Rotating Tool" class="machine">
                 </div>
             </div>
-                        
+
             <h1 class="display-4">Find & Hire Skilled Professionals</h1>
             <p class="lead">Connect with trusted plumbers, electricians, mechanics, and more near you.</p>
             <form class="d-flex justify-content-center mt-4" role="search" action="/professionals" method="GET">
@@ -88,59 +139,60 @@
             </form>
         </div>
 
-        <section class="container">
+        <!-- Popular Categories Slider -->
+        <section class="container mt-5">
             <h2 class="mb-4 text-center text-primary">Popular Categories</h2>
-            <div class="row text-center">
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 border-primary shadow-sm">
-                        <div class="card-body">
-                            <i class="bi bi-tools fs-1 text-primary"></i>
-                            <h5 class="card-title mt-3">Electrician</h5>
-                            <p class="card-text">Need help with wiring or power issues?</p>
-                        </div>
-                    </div>
+
+            <div class="position-relative">
+                <button id="scrollLeft" class="scroll-arrow">
+                    <i class="bi bi-chevron-left fs-4"></i>
+                </button>
+
+                <div id="categoryScroll" class="category-container">
+                    <% const categories = [
+                        { name: 'Electrician', icon: 'bi-tools', color: 'primary', desc: 'Need help with wiring or power issues?' },
+                        { name: 'Plumber', icon: 'bi-water', color: 'info', desc: 'Fix water leaks and plumbing problems.' },
+                        { name: 'Mechanic', icon: 'bi-car-front', color: 'danger', desc: 'Vehicle issues? Find expert car repair help.' },
+                        { name: 'Painter', icon: 'bi-brush', color: 'success', desc: 'Give your home a fresh new look.' },
+                        { name: 'Carpenter', icon: 'bi-house', color: 'warning', desc: 'Need custom woodwork or repairs?' },
+                        { name: 'AC Technician', icon: 'bi-wind', color: 'secondary', desc: 'AC installation or service needed?' },
+                        { name: 'Welder', icon: 'bi-lightning', color: 'dark', desc: 'Get precision welding jobs done.' },
+                        { name: 'Driver', icon: 'bi-truck', color: 'info', desc: 'Find trusted drivers near you.' },
+                        { name: 'Gardener', icon: 'bi-tree', color: 'success', desc: 'Beautify your lawn or garden.' },
+                        { name: 'Security Guard', icon: 'bi-shield-lock', color: 'danger', desc: 'Hire reliable security guards.' },
+                        { name: 'Mason', icon: 'bi-bricks', color: 'warning', desc: 'Skilled construction and masonry work.' },
+                        { name: 'Pest Control', icon: 'bi-bug', color: 'dark', desc: 'Remove pests from your space safely.' },
+                        { name: 'Cleaner', icon: 'bi-bucket', color: 'primary', desc: 'Get expert home or office cleaning.' },
+                    ]; %>
+
+                    <% categories.forEach(cat => { %>
+                        <a href="/professionals?category=<%= cat.name %>" class="text-decoration-none">
+                            <div class="category-card border-<%= cat.color %> shadow-sm">
+                                <i class="bi <%= cat.icon %> category-icon text-<%= cat.color %>"></i>
+                                <h5 class="card-title mt-3"><%= cat.name %></h5>
+                                <p class="card-text small"><%= cat.desc %></p>
+                            </div>
+                        </a>
+                    <% }) %>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 border-info shadow-sm">
-                        <div class="card-body">
-                            <i class="bi bi-water fs-1 text-info"></i>
-                            <h5 class="card-title mt-3">Plumber</h5>
-                            <p class="card-text">Fix water leaks and plumbing problems.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 border-danger shadow-sm">
-                        <div class="card-body">
-                            <i class="bi bi-car-front fs-1 text-danger"></i>
-                            <h5 class="card-title mt-3">Mechanic</h5>
-                            <p class="card-text">Vehicle issues? Find expert car repair help.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 border-success shadow-sm">
-                        <div class="card-body">
-                            <i class="bi bi-brush fs-1 text-success"></i>
-                            <h5 class="card-title mt-3">Painter</h5>
-                            <p class="card-text">Give your home a fresh new look.</p>
-                        </div>
-                    </div>
-                </div>
+
+                <button id="scrollRight" class="scroll-arrow">
+                    <i class="bi bi-chevron-right fs-4"></i>
+                </button>
             </div>
         </section>
 
+        <!-- Featured Professionals -->
         <section class="py-5" style="background-color: #84d4fd;">
             <div class="container">
                 <h2 class="mb-4 text-center text-dark">Featured Professionals</h2>
-                <div class="container mt-3 d-flex flex-row gap-3">
+                <div class="container mt-3 d-flex flex-row gap-3 flex-wrap justify-content-center">
                     <% blogs.forEach(blog => { %>
                         <div class="card" style="width: 18rem;">
-                            <!-- Show only the first image from the coverImageURL array -->
                             <img src="<%= blog.coverImageURL[0] %>" class="card-img-top" alt="...">
                             <div class="card-body">
-                              <h5 class="card-title"><%= blog.title %></h5>
-                              <a href="/blog/<%= blog._id %>" class="btn btn-primary">View More</a>
+                                <h5 class="card-title"><%= blog.title %></h5>
+                                <a href="/blog/<%= blog._id %>" class="btn btn-primary">View More</a>
                             </div>
                         </div>
                     <% }) %>
@@ -153,8 +205,21 @@
             </div>
         </section>
     </header>
-    
+
     <%- include('./partials/scripts') %>
+    <script>
+        const scrollContainer = document.getElementById('categoryScroll');
+        const scrollLeftBtn = document.getElementById('scrollLeft');
+        const scrollRightBtn = document.getElementById('scrollRight');
+
+        scrollLeftBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+
+        scrollRightBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+    </script>
     <%- include('./partials/footer') %>
 </body>
 </html>

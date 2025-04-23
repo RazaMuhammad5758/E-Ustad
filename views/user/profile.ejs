@@ -37,7 +37,7 @@
 
       <p><span class="info-label">Email:</span> <%= user.email %></p>
       <p><span class="info-label">Phone:</span> <%= user.phone || 'Not provided' %></p>
-      <p><span class="info-label">Role:</span> <%= user.role %></p>
+      <p><span class="info-label">Role:</span> <%= user.userRole %></p>
       <p><span class="info-label">Joined:</span> <%= user.createdAt.toDateString() %></p>
 
       <a href="/" class="btn btn-primary mt-4">Back to Home</a>

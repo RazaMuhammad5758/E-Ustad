@@ -74,7 +74,7 @@
         </li>
 
         <% if (locals.user) { %>
-          <% if (locals.user.role === 'PROFESSIONAL') { %>
+          <% if (user.userRole === 'PROFESSIONAL') { %>
             <li class="nav-item">
               <a class="nav-link active" href="/blog/add-new">Add Blog</a>
             </li>
@@ -82,8 +82,8 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= locals.user.fullName %>
-              <img src="<%= locals.user.profileImageUrl %>" alt="Profile Image" class="rounded-circle" width="30" height="30" style="object-fit: cover; margin-right: 10px;">
+              <%= user.fullName %>
+              <img src="<%= user.profileImageUrl %>" alt="Profile Image" class="rounded-circle" width="30" height="30" style="object-fit: cover; margin-right: 10px;">
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/user/profile">Your Profile</a></li>
@@ -104,10 +104,10 @@
   </div>
 </nav>
 
-<% if (locals.error) { %>
+<% if (error) { %>
   <div class="container mt-4">
     <div class="alert alert-danger" role="alert">
-      <%= locals.error %>
+      <%= error %>
     </div>
   </div>
 <% } %>
