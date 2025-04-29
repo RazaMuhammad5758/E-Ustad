@@ -4,11 +4,18 @@
     <%- include('./partials/head') %>
     <title><%= blog.title %> | Blog</title>
     <style>
+        body {
+            background: url('/images/bg1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+    
         .author-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+    
         pre {
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -16,7 +23,15 @@
             padding: 10px;
             border-radius: 8px;
         }
+    
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* slightly transparent background for better readability */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
     </style>
+    
 </head>
 <body>
     <%- include('./partials/nav') %>

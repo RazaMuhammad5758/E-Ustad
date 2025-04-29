@@ -4,6 +4,11 @@
     <%- include('./partials/head') %>
     <title>Professionals</title>
     <style>
+        body {
+            background: url('/images/bg1.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
         .author-info {
             display: flex;
             align-items: center;
@@ -13,12 +18,16 @@
         .author-info img {
             border-radius: 50%;
         }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* optional for better readability */
+        }
     </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
 
-    <div class="container mt-3 d-flex flex-row gap-3">
+    <div class="container mt-3 d-flex flex-row gap-3 flex-wrap">
         <% blogs.forEach(blog => { %>
             <div class="card" style="width: 18rem;">
                 <!-- Show only the first image from the coverImageURL array -->

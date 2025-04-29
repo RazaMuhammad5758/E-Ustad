@@ -24,10 +24,41 @@
     .info-label {
       font-weight: bold;
     }
+    
+  body {
+    background: url('/images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
+  .profile-card {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95); /* Slight transparency */
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 3px solid #007bff;
+  }
+
+  .info-label {
+    font-weight: bold;
+  }
+
+
   </style>
 </head>
 
 <body class="bg-light">
+  <%- include('../partials/nav') %>
 
   <div class="container">
     <div class="profile-card text-center">
@@ -38,11 +69,12 @@
       <p><span class="info-label">Email:</span> <%= user.email %></p>
       <p><span class="info-label">Phone:</span> <%= user.phone || 'Not provided' %></p>
       <p><span class="info-label">Role:</span> <%= user.userRole %></p>
+    
       <p><span class="info-label">Joined:</span> <%= user.createdAt.toDateString() %></p>
 
       <a href="/" class="btn btn-primary mt-4">Back to Home</a>
     </div>
   </div>
-
+  <%- include('../partials/scripts') %>
 </body>
 </html>

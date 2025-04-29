@@ -38,10 +38,22 @@
         </div>
 
         <!-- Phone -->
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone</label>
-          <input type="number" name="phone" class="form-control" id="phone" required>
-        </div>
+        <!-- Phone with Country Code -->
+<div class="mb-3">
+  <label for="phone" class="form-label">Phone</label>
+  <div class="input-group">
+    <select class="form-select" id="countryCode" name="countryCode" style="max-width: 100px;">
+      <option value="+92" selected>+92</option>
+      <option value="+91">+91</option>
+      <option value="+1">+1</option>
+      <option value="+44">+44</option>
+      <option value="+61">+61</option>
+      <!-- Add more country codes as needed -->
+    </select>
+    <input type="text" name="phone" class="form-control" id="phone" required placeholder="3001234567">
+  </div>
+  <div id="phoneHelp" class="form-text">Enter 11-digit number without country code (e.g., 3001234567).</div>
+</div>
 
         <!-- Address -->
         <div class="mb-3">
@@ -112,12 +124,19 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <a href="/user/signin"><button type="submit" class="btn btn-primary w-100">Submit</button></a>
       </form>
     </div>
   </div>
 
   <script>
+    const phoneInput = document.getElementById('phone');
+
+phoneInput.addEventListener('input', function () {
+  if (phoneInput.value.length > 11) {
+    phoneInput.value = phoneInput.value.slice(0, 11);
+  }
+});
     document.addEventListener('DOMContentLoaded', function () {
     const role = document.getElementById('role');
     const professionField = document.getElementById('professionField');
