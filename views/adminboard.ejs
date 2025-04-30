@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Board</title>
+    <link rel="stylesheet" href="/css/styles.css">  <!-- Add your stylesheet here -->
+</head>
+<body>
+    <h1>Admin Board</h1>
+    <div class="user-list">
+        <h3>All Users</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>User Role</th>
+                    <th>Profile</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        
+                        <td><%= user.email %></td>
+                        <td><%= user.userRole %></td>
+                        <td><img src="<%= user.profileImageUrl %>" alt="Profile" width="50" height="50"></td>
+                        <td>
+                            <a href="/user/profile/<%= user._id %>">View</a>  <!-- Link to view individual user profile -->
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/user/logout">Logout</a>
+</body>
+</html>

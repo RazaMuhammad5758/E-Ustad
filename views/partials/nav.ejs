@@ -60,7 +60,7 @@
         <img src="/images/machine.png" alt="Rotating Tool" class="rotating-tool">
       </div>
     </div>
-    
+
     <a class="navbar-brand" href="/">E-Ustad</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,10 +73,16 @@
           <a class="nav-link active" aria-current="page" href="/Professionals">Professionals</a>
         </li>
 
-        <% if (locals.user) { %>
+        <% if (user) { %>
           <% if (user.userRole === 'PROFESSIONAL') { %>
             <li class="nav-item">
               <a class="nav-link active" href="/blog/add-new">Add Blog</a>
+            </li>
+          <% } %>
+
+          <% if (user.email === 'admin@gmail.com') { %>
+            <li class="nav-item">
+              <a class="nav-link active" href="/user/adminboard">All profiles</a>
             </li>
           <% } %>
 
@@ -90,7 +96,6 @@
               <li><a class="dropdown-item active" href="/user/logout">Logout</a></li>
             </ul>
           </li>
-
         <% } else { %>
           <li class="nav-item">
             <a class="nav-link active" href="/user/signup">Create account</a>
@@ -111,3 +116,4 @@
     </div>
   </div>
 <% } %>
+  
