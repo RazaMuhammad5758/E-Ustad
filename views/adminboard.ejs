@@ -23,7 +23,7 @@
             <tbody>
                 <% users.forEach(user => { %>
                     <tr>
-                        
+                        <td><%= user.fullName %></td>
                         <td><%= user.email %></td>
                         <td><%= user.userRole %></td>
                         <td><img src="<%= user.profileImageUrl %>" alt="Profile" width="50" height="50"></td>
