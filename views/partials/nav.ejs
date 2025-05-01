@@ -73,7 +73,7 @@
           <a class="nav-link active" aria-current="page" href="/Professionals">Professionals</a>
         </li>
 
-        <% if (user) { %>
+        <% if (locals.user) { %>
           <% if (user.userRole === 'PROFESSIONAL') { %>
             <li class="nav-item">
               <a class="nav-link active" href="/blog/add-new">Add Blog</a>
