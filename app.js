@@ -79,7 +79,7 @@ app.get('/user/profile', (req, res) => {
     res.render('user/profile', { user });
 });
 
-  
+
 app.use("/user", userRoutes)
 app.use("/blog", blogRoutes)
 // app.use((req, res, next) => {
