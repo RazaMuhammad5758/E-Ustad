@@ -11,6 +11,8 @@ const Blog = require("./models/blog")
 const adminRoutes = require('./routes/admin'); // path adjust karein
 app.use(adminRoutes);
 
+app.use('/admin', adminRoutes);
+
 
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))

@@ -12,5 +12,12 @@ router.get('/adminboard', async (req, res) => {
         res.status(500).send("Server Error");
     }
 });
-
+router.post('/admin/delete/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/board');
+    } catch (error) {
+        res.status(500).send("Error deleting user");
+    }
+});
 module.exports = router;

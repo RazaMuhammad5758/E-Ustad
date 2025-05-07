@@ -134,13 +134,6 @@ router.get('/profile', (req, res) => {
   res.render('user/profile', { user });
 });
 
-router.post('/admin/delete/:id', async (req, res) => {
-  try {
-      await User.findByIdAndDelete(req.params.id);
-      res.redirect('/admin/board');
-  } catch (error) {
-      res.status(500).send("Error deleting user");
-  }
-});
+
 
 module.exports = router;
