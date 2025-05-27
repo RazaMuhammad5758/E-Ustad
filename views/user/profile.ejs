@@ -11,7 +11,7 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
     }
     .profile-img {
       width: 120px;
@@ -24,36 +24,11 @@
     .info-label {
       font-weight: bold;
     }
-    
-  body {
-    background: url('/images/bg1.png') no-repeat center center fixed;
-    background-size: cover;
-    min-height: 100vh;
-  }
-
-  .profile-card {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.95); /* Slight transparency */
-  }
-
-  .profile-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    border: 3px solid #007bff;
-  }
-
-  .info-label {
-    font-weight: bold;
-  }
-
-
+    body {
+      background: url('/images/bg1.png') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
   </style>
 </head>
 
@@ -68,13 +43,43 @@
 
       <p><span class="info-label">Email:</span> <%= user.email %></p>
       <p><span class="info-label">Phone:</span> <%= user.phone || 'Not provided' %></p>
-      <p><span class="info-label">Role:</span> <%= user.userRole %></p>
-    
+      <p><span class="info-label">Role:</span> <%= user.role %></p>
       <p><span class="info-label">Joined:</span> <%= user.createdAt.toDateString() %></p>
 
-      <a href="/" class="btn btn-primary mt-4">Back to Home</a>
+      <a href="/" class="btn btn-primary mt-2">Back to Home</a>
+    </div>
+
+    <div class="mt-5">
+      <h4 class="text-center" style="font-weight: 700; font-size: 28px; color: #ffffff; margin-top: 40px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+        Your Blogs
+          </h4>
+
+
+      <% if (blogs.length > 0) { %> 
+        <div class="row mt-3">
+          <% blogs.forEach(blog => { %>
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <% if (blog.coverImageURL && blog.coverImageURL.length > 0) { %>
+                  <img src="<%= blog.coverImageURL[0] %>" class="card-img-top" alt="Cover Image">
+                <% } else { %>
+                  <img src="/images/default-cover.jpg" class="card-img-top" alt="Default Cover">
+                <% } %>
+                <div class="card-body">
+                  <h5 class="card-title"><%= blog.title %></h5>
+                  <p class="card-text"><%= blog.body.substring(0, 100) %>...</p>
+                  <a href="/blog/<%= blog._id %>" class="btn btn-primary">View Blog</a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-center mt-3">You haven't posted any blogs yet.</p>
+      <% } %>
     </div>
   </div>
+
   <%- include('../partials/scripts') %>
 </body>
 </html>

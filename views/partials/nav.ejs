@@ -49,10 +49,8 @@
       }
     }
     .navbar-nav .nav-link:hover {
-  
-  text-shadow: 1px 1px 2px black;
-}
-
+      text-shadow: 1px 1px 2px black;
+    }
   </style>
 </head>
 
@@ -67,7 +65,6 @@
     </div>
 
     <a class="navbar-brand" href="/">E-Ustad</a>
-   
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
@@ -76,7 +73,7 @@
         </li>
 
         <% if (locals.user) { %>
-          <% if (user.userRole === 'PROFESSIONAL') { %>
+          <% if (user.role && user.role.toLowerCase() === 'professional') { %>
             <li class="nav-item">
               <a class="nav-link active" href="/blog/add-new">Add Blog</a>
             </li>
@@ -111,7 +108,7 @@
   </div>
 </nav>
 
-<% if (error) { %>
+<% if (typeof error !== 'undefined' && error) { %>
   <div class="container mt-4">
     <div class="alert alert-danger" role="alert">
       <%= error %>

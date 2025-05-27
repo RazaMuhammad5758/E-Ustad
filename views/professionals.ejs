@@ -34,15 +34,7 @@
                 <img src="<%= blog.coverImageURL[0] %>" class="card-img-top" alt="Blog Image">
                 
                 <div class="card-body">
-                    <!-- Author Info: Display author's name and profile image -->
-                    <% if (blog.createdBy && blog.createdBy.profileImageUrl && blog.createdBy.fullName) { %>
-                        <div class="author-info">
-                            <img src="<%= blog.createdBy.profileImageUrl %>" class="rounded-circle" width="30" height="30" alt="Author Image">
-                            <strong><%= blog.createdBy.fullName %></strong>
-                        </div>
-                    <% } else { %>
-                        <p><em>Author info not available</em></p>
-                    <% } %>
+                    
                     
                     <h5 class="card-title"><%= blog.title %></h5>
                     <a href="/blog/<%= blog._id %>" class="btn btn-primary">View More</a>

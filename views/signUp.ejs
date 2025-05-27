@@ -37,23 +37,21 @@
           <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
         </div>
 
-        <!-- Phone -->
         <!-- Phone with Country Code -->
-<div class="mb-3">
-  <label for="phone" class="form-label">Phone</label>
-  <div class="input-group">
-    <select class="form-select" id="countryCode" name="countryCode" style="max-width: 100px;">
-      <option value="+92" selected>+92</option>
-      <option value="+91">+91</option>
-      <option value="+1">+1</option>
-      <option value="+44">+44</option>
-      <option value="+61">+61</option>
-      <!-- Add more country codes as needed -->
-    </select>
-    <input type="text" name="phone" class="form-control" id="phone" required placeholder="3001234567">
-  </div>
-  <div id="phoneHelp" class="form-text">Enter 11-digit number without country code (e.g., 3001234567).</div>
-</div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <div class="input-group">
+            <select class="form-select" id="countryCode" name="countryCode" style="max-width: 100px;">
+              <option value="+92" selected>+92</option>
+              <option value="+91">+91</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+61">+61</option>
+            </select>
+            <input type="text" name="phone" class="form-control" id="phone" required placeholder="3001234567">
+          </div>
+          <div id="phoneHelp" class="form-text">Enter 11-digit number without country code (e.g., 3001234567).</div>
+        </div>
 
         <!-- Address -->
         <div class="mb-3">
@@ -68,49 +66,48 @@
             <option value="" selected disabled>Choose role</option>
             <option value="client">Client</option>
             <option value="professional">Professional</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
 
         <!-- Profession (only if role is professional) -->
-
-        <!-- Profession (only if role is professional) -->
-<div class="mb-3" id="professionField" style="display: none;">
-  <label for="profession" class="form-label">Select Your Profession</label>
-  <select class="form-select" name="profession" id="profession">
-    <option value="" selected disabled>Choose a profession</option>
-    <option value="plumber">Plumber</option>
-    <option value="electrician">Electrician</option>
-    <option value="mechanic">Mechanic</option>
-    <option value="painter">Painter</option>
-    <option value="carpenter">Carpenter</option>
-    <option value="ac_technician">AC Technician</option>
-    <option value="welder">Welder</option>
-    <option value="driver">Driver</option>
-    <option value="gardener">Gardener</option>
-    <option value="security_guard">Security Guard</option>
-    <option value="mason">Mason</option>
-    <option value="roofer">Roofer</option>
-    <option value="glass_installer">Glass Installer</option>
-    <option value="floor_tiler">Floor Tiler</option>
-    <option value="pest_control">Pest Control Specialist</option>
-    <option value="locksmith">Locksmith</option>
-    <option value="interior_designer">Interior Designer</option>
-    <option value="cleaning_expert">Cleaning Expert</option>
-    <option value="laundry">Laundry/Washing Services</option>
-    <option value="waterproofing">Waterproofing Expert</option>
-    <option value="solar_installer">Solar Panel Installer</option>
-    <option value="network_technician">Network Technician</option>
-    <option value="cctv_installer">CCTV Installer</option>
-    <option value="it_support">IT Support Technician</option>
-    <option value="landscaper">Landscaper</option>
-  </select>
-</div>
+        <div class="mb-3" id="professionField" style="display: none;">
+          <label for="profession" class="form-label">Select Your Profession</label>
+          <select class="form-select" name="profession" id="profession">
+            <option value="" selected disabled>Choose a profession</option>
+            <option value="plumber">Plumber</option>
+            <option value="electrician">Electrician</option>
+            <option value="mechanic">Mechanic</option>
+            <option value="painter">Painter</option>
+            <option value="carpenter">Carpenter</option>
+            <option value="ac_technician">AC Technician</option>
+            <option value="welder">Welder</option>
+            <option value="driver">Driver</option>
+            <option value="gardener">Gardener</option>
+            <option value="security_guard">Security Guard</option>
+            <option value="mason">Mason</option>
+            <option value="roofer">Roofer</option>
+            <option value="glass_installer">Glass Installer</option>
+            <option value="floor_tiler">Floor Tiler</option>
+            <option value="pest_control">Pest Control Specialist</option>
+            <option value="locksmith">Locksmith</option>
+            <option value="interior_designer">Interior Designer</option>
+            <option value="cleaning_expert">Cleaning Expert</option>
+            <option value="laundry">Laundry/Washing Services</option>
+            <option value="waterproofing">Waterproofing Expert</option>
+            <option value="solar_installer">Solar Panel Installer</option>
+            <option value="network_technician">Network Technician</option>
+            <option value="cctv_installer">CCTV Installer</option>
+            <option value="it_support">IT Support Technician</option>
+            <option value="landscaper">Landscaper</option>
+          </select>
+        </div>
 
         <div class="mb-3" id="cnicImageField" style="display: none;">
           <label for="cnicImage" class="form-label">CNIC Image</label>
           <input type="file" name="cnicImage" class="form-control" id="cnicImage" accept="image/*">
         </div>
-        
+
         <!-- Experience (only if role is professional) -->
         <div class="mb-3" id="experienceField" style="display: none;">
           <label for="experience" class="form-label">Years of Experience</label>
@@ -132,30 +129,34 @@
   <script>
     const phoneInput = document.getElementById('phone');
 
-phoneInput.addEventListener('input', function () {
-  if (phoneInput.value.length > 11) {
-    phoneInput.value = phoneInput.value.slice(0, 11);
-  }
-});
-    document.addEventListener('DOMContentLoaded', function () {
-    const role = document.getElementById('role');
-    const professionField = document.getElementById('professionField');
-    const profession = document.getElementById('profession');
-    const cnicImageField = document.getElementById('cnicImageField');
-    const experienceField = document.getElementById('experienceField');
-
-    role.addEventListener('change', function () {
-      const isProfessional = role.value === 'professional';
-
-      professionField.style.display = isProfessional ? 'block' : 'none';
-      cnicImageField.style.display = isProfessional ? 'block' : 'none';
-      experienceField.style.display = isProfessional ? 'block' : 'none';
-
-      profession.required = isProfessional;
-      document.getElementById('cnicImage').required = isProfessional;
-      document.getElementById('experience').required = isProfessional;
+    phoneInput.addEventListener('input', function () {
+      if (phoneInput.value.length > 11) {
+        phoneInput.value = phoneInput.value.slice(0, 11);
+      }
     });
-  });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const role = document.getElementById('role');
+      const professionField = document.getElementById('professionField');
+      const profession = document.getElementById('profession');
+      const cnicImageField = document.getElementById('cnicImageField');
+      const experienceField = document.getElementById('experienceField');
+
+      function toggleProfessionalFields() {
+        const isProfessional = role.value.toLowerCase() === 'professional';
+
+        professionField.style.display = isProfessional ? 'block' : 'none';
+        cnicImageField.style.display = isProfessional ? 'block' : 'none';
+        experienceField.style.display = isProfessional ? 'block' : 'none';
+
+        profession.required = isProfessional;
+        document.getElementById('cnicImage').required = isProfessional;
+        document.getElementById('experience').required = isProfessional;
+      }
+
+      toggleProfessionalFields();
+      role.addEventListener('change', toggleProfessionalFields);
+    });
   </script>
 
   <%- include('./partials/scripts') %>

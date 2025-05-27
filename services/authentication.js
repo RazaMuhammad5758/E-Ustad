@@ -1,6 +1,5 @@
 const JWT = require("jsonwebtoken");
-
-const secret = "Raz@.7714";
+const secret = process.env.JWT_SECRET; // Now reads from .env
 
 function createTokenForUser(user) {
   const payload = {
@@ -10,13 +9,11 @@ function createTokenForUser(user) {
     profileImageUrl: user.profileImageUrl,
     role: user.role
   };
-  const token = JWT.sign(payload, secret);
-  return token;
+  return JWT.sign(payload, secret);
 }
 
 function validateToken(token) {
-  const payload = JWT.verify(token, secret);
-  return payload; // Ensure this returns the user data
+  return JWT.verify(token, secret);
 }
 
 module.exports = {

@@ -1,94 +1,79 @@
-const { Schema, model } = require('mongoose')
-const { createHmac, randomBytes } = require('node:crypto');
-const { createTokenForUser } = require('../services/authentication');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const userSchema = new Schema({
-    fullName:{
-        type: String,
-        required: true,
+const userSchema = new mongoose.Schema({
+  fullName: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  profileImageUrl: {
+    type: String,
+    default: "/images/profile.jpg"
+  },
+  salt: String,
+  password: {
+    type: String,
+    required: true
+  },
+  phone: String,
+  address: String,
+  role: {
+    type: String,
+    enum: ['CLIENT', 'PROFESSIONAL', 'ADMIN'],
+    set: (v) => v.toUpperCase(), // ✅ Always store in uppercase
+    required: true
+  },
+  profession: {
+    type: String,
+    required: function () {
+      return this.role === 'PROFESSIONAL';
+    }
+  },
+  cnicImage: {
+    type: String,
+    required: function () {
+      return this.role === 'PROFESSIONAL';
+    }
+  },
+  experience: {
+    type: Number,
+    required: function () {
+      return this.role === 'PROFESSIONAL';
+    }
+  }
+}, { timestamps: true });
 
-    },
-    email:{
-        type: String,
-        required: true,
-        unique: true
-    },
-    profileImageUrl:{
-        type: String,
-        default: "/images/profile.jpg"
-    },
-    salt:{
-        type: String,
-        
-    },
-    password:{
-        type: String,
-        required: true,  
-    },
-    phone:{
-        type: Number,
-        required: true,  
-    },
-    address: {
-        type: String,
-        required: true
-    },
-    userRole: {
-        type: String,
-        enum: ['CLIENT', 'PROFESSIONAL'],
-        default: 'CLIENT'
-    },
-    profession: {
-        type: String,
-        required: function() {
-          return this.role === 'professional';
-        },
-    },
-    cnicImage: {
-        type: String,
-        required: function () {
-          return this.role === 'professional';
-        }
-    },
-    experience: {
-        type: Number,
-        required: function () {
-          return this.role === 'professional';
-        }
-    },
-      
-}, 
-{timestamps: true})
+// Hash password before saving
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, this.salt);
+  }
+  next();
+});
 
-userSchema.pre("save",  function(next){
-    const user = this;
+// Password validation
+userSchema.statics.matchPasswordAndGenerateToken = async function (email, password) {
+  const user = await this.findOne({ email });
 
-    if(!this.isModified("password")) return;
+  if (!user) throw new Error("User not found");
 
-    const salt = randomBytes(16).toString();
-    const hashedPassword = createHmac("sha256", salt).update(user.password).digest('hex');
-    this.salt = salt;
-    this.password = hashedPassword
+  const isMatched = await bcrypt.compare(password, user.password);
+  if (!isMatched) throw new Error("Incorrect password");
 
-    next();
-})
+  const token = jwt.sign({
+    _id: user._id,
+    email: user.email,
+    role: user.role
+  }, process.env.JWT_SECRET || "secret", { expiresIn: "7d" });
 
-userSchema.static("matchPasswordAndGenerateToken", async function(email, password){
-    const user = await this.findOne({email})
-    if(!user) throw new Error("User not found");
+  return token;
+};
 
-    const salt = user.salt
-    const hashedPassword = user.password
-
-    const userProvidedHashed = createHmac("sha256", salt).update(password).digest('hex');
-    
-    if(hashedPassword !== userProvidedHashed) throw new Error("Password Incorrect");
-    
-    const token = createTokenForUser(user)
-    return token;
-
-})
-
-const User = model('user', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);

@@ -1,0 +1,2 @@
+<a href="/admin/profile/<%= user._id %>" class="btn btn-sm btn-outline-primary">View</a>  from admin board
+<a href="/admin/profile/<%= user._id %>" class="btn btn-sm btn-outline-primary">View</a>  from admin board
