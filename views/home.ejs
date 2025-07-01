@@ -4,7 +4,6 @@
     <%- include('./partials/head') %>
     <title>Home - SkillConnect</title>
     <style>
-        /* Stylish vertical scrollbar for full page */
         html {
             scrollbar-width: thin;
             scrollbar-color: #000000 #e9ecef00;
@@ -15,7 +14,7 @@
         }
 
         body::-webkit-scrollbar-track {
-            background: transparent; /* Make the track background transparent */
+            background: transparent;
         }
 
         body::-webkit-scrollbar-thumb {
@@ -29,14 +28,11 @@
         }
 
         .hero-bg {
-            background: url('/images/bg4.PNG');
-            background-size: cover;
-            background-position: center;
+            background-color: rgba(0, 123, 255, 0.6);
             position: relative;
             overflow: hidden;
         }
 
-        /* Stylish Rotating Background */
         .animated-background {
             position: absolute;
             top: 50%;
@@ -160,13 +156,14 @@
                 display: none;
             }
         }
+
         #viewpro {
             background: transparent;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid white;
-            transition: all 0.3s ease; /* Add transition for smooth effect */
+            transition: all 0.3s ease;
         }
 
         #viewpro:hover {
@@ -174,7 +171,6 @@
             color: black;
             border: 1px solid white;
         }
-
     </style>
 </head>
 
@@ -184,7 +180,6 @@
     <header class="hero-bg text-white text-center py-5">
         <div class="container">
             <div class="d-flex ms-auto align-items-center">
-                <!-- Stylish Rotating Section -->
                 <div class="animated-background">
                     <div class="glow-circle"></div>
                     <div class="rotating-img outer">
