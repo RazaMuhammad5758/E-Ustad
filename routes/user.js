@@ -43,14 +43,9 @@ router.get("/professionals", async (req, res) => {
   }
 });
 
-// Admin Login Bypass (special case for admin login)
+// Admin Login Bypass Removed - this logic should be handled in a proper admin route
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
-
-  if (User.email === "admin@gmail.com" && User.role === "ADMIN") {
-  return res.redirect("/admin/adminboard");
-}
-
 
   try {
     const token = await User.matchPasswordAndGenerateToken(email, password);
@@ -59,10 +54,16 @@ router.post("/signin", async (req, res) => {
     const userData = {
       _id: user._id,
       fullName: user.fullName,
-      email: user.email
+      email: user.email,
+      role: user.role
     };
 
     res.locals.user = userData;
+
+    if (user.role === "ADMIN") {
+      return res.cookie("token", token).redirect("/admin/adminboard");
+    }
+
     return res.cookie("token", token).redirect("/");
 
   } catch (error) {
@@ -72,16 +73,7 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-// Adminboard Route - Show all users
-router.get("/adminboard", async (req, res) => {
-  try {
-    const allUsers = await User.find();
-    res.render("adminboard", { users: allUsers });
-  } catch (error) {
-    console.error("Error loading adminboard:", error);
-    res.status(500).send("Server Error");
-  }
-});
+// Removed /adminboard from here — now handled in routes/admin.js
 
 // User Signup Route
 router.post("/signup", upload.fields([
@@ -135,6 +127,13 @@ router.post("/signup", upload.fields([
   }
 });
 
+// admin
+// Redirect old /user/adminboard to new /admin/adminboard
+router.get('/adminboard', (req, res) => {
+  return res.redirect('/admin/adminboard');
+});
+
+
 // Logout Route
 router.get("/logout", (req, res) => {
   res.clearCookie("token").redirect("/");
@@ -153,7 +152,5 @@ router.get('/profile', async (req, res) => {
     res.render('user/profile', { user, blogs: [] });
   }
 });
-
-
 
 module.exports = router;
