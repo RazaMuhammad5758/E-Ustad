@@ -1,31 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-router.get('/adminboard')  // Inside admin.js
+
 const Blog = require('../models/blog'); // ✅ Required
 
 router.get('/adminboard', async (req, res) => {
   try {
     const users = await User.find();
 
-    // Count users by profession
+    // ✅ Use "role" instead of "userRole"
     const userCounts = await User.aggregate([
       { $match: { role: "PROFESSIONAL" } },
       { $group: { _id: "$profession", count: { $sum: 1 } } }
     ]);
 
-    // Count blogs by category
     const blogCounts = await Blog.aggregate([
-      { $group: { _id: "$category", count: { $sum: 1 } } }
+      { $group: { _id: "$profession", count: { $sum: 1 } } }
     ]);
-
-    // Combine both into professionStats
-    const professionStats = [];
 
     const allProfessions = new Set([
       ...userCounts.map(u => u._id),
       ...blogCounts.map(b => b._id)
     ]);
+
+    const professionStats = [];
 
     allProfessions.forEach(prof => {
       const userEntry = userCounts.find(u => u._id === prof);
@@ -38,8 +36,8 @@ router.get('/adminboard', async (req, res) => {
       });
     });
 
-    // ✅ Send professionStats to the view
     res.render('adminboard', { users, professionStats });
+
   } catch (error) {
     console.error("Adminboard error:", error);
     res.status(500).send("Server Error");
