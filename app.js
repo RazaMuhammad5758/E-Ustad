@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGO_URL).then(() => console.log("MongoDB connecte
 const PORT = process.env.PORT || 7000;
 
 app.use("/admin", adminRoutes);
-app.use("/user", userRoutes); // ✅ ensure it's used before any /user route
+app.use("/user", userRoutes); 
 app.use("/blog", blogRoutes);
 
 app.get("/", async (req, res) => {
