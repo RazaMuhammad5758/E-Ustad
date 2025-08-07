@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 
+
 const commentSchema = new Schema({
     content:{
         type: String,
@@ -11,7 +12,7 @@ const commentSchema = new Schema({
     },
     createdBy:{
         type: Schema.Types.ObjectId,
-        ref: "user"
+        ref: "User"
     }
 
 }, { timestamps: true})

@@ -3,6 +3,9 @@ const Blog = require("../models/blog")
 const multer = require("multer")
 const path = require("path")
 const Comment = require("../models/comments")
+// Import karo User model
+const User = require('../models/user');
+
 
 const router = Router()
 
