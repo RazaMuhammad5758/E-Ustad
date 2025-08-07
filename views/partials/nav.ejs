@@ -43,31 +43,31 @@
       }
     }
 
+    .navbar-nav .nav-link:hover {
+      text-shadow: 1px 1px 2px black;
+    }
+
     @media (max-width: 768px) {
       .tool-wrapper {
         display: none;
       }
-    }
-    .navbar-nav .nav-link:hover {
-      text-shadow: 1px 1px 2px black;
     }
   </style>
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
   <div class="container-fluid">
-    <!-- Rotating icon aligned to the right -->
-    <div class="d-flex ms-auto me-3 align-items-center">
-      <div class="tool-wrapper">
-        <img src="/images/machine2.png" alt="Base Tool" class="static-tool">
-        <img src="/images/machine.png" alt="Rotating Tool" class="rotating-tool">
-      </div>
-    </div>
-
     <a class="navbar-brand" href="/">E-Ustad</a>
 
+    <!-- Toggler Button for Mobile View -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Items -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/Professionals">Professionals</a>
         </li>
@@ -84,13 +84,18 @@
               <a class="nav-link active" href="/user/adminboard">All profiles</a>
             </li>
           <% } %>
+        <% } %>
+      </ul>
 
+      <!-- Right-side User Menu or Auth Links -->
+      <ul class="navbar-nav">
+        <% if (locals.user) { %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle active d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <%= user.fullName %>
-              <img src="<%= user.profileImageUrl %>" alt="Profile Image" class="rounded-circle" width="30" height="30" style="object-fit: cover; margin-right: 10px;">
+              <img src="<%= user.profileImageUrl %>" alt="Profile Image" class="rounded-circle ms-2" width="30" height="30" style="object-fit: cover;">
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/user/profile">Your Profile</a></li>
               <li><a class="dropdown-item active" href="/user/logout">Logout</a></li>
             </ul>
@@ -104,10 +109,19 @@
           </li>
         <% } %>
       </ul>
+
+      <!-- Rotating Icon (only on larger screens) -->
+      <div class="d-none d-lg-flex ms-3 align-items-center">
+        <div class="tool-wrapper">
+          <img src="/images/machine2.png" alt="Base Tool" class="static-tool">
+          <img src="/images/machine.png" alt="Rotating Tool" class="rotating-tool">
+        </div>
+      </div>
     </div>
   </div>
 </nav>
 
+<!-- Display error alert if exists -->
 <% if (typeof error !== 'undefined' && error) { %>
   <div class="container mt-4">
     <div class="alert alert-danger" role="alert">
